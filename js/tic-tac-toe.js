@@ -6,10 +6,6 @@ window.addEventListener('DOMContentLoaded', initiate);
 
 
 function initiate(){
-	if(user_1_Type === -1){
-		user_1_Type  = Math.floor(Math.random() * (10 - 1) ) + 1;
-		if(user_1_Type <= 5){ user_1_Type = "X"}
-	}
 	let board_div = document.getElementById("board").querySelectorAll("div")
 	for(let a = 0; a <board_div.length; a++){
 		blocks[a] = {name: board_div[a], value:""};
@@ -23,6 +19,11 @@ function initiate(){
 	}
 	//add the square property to each div
 	fill_all()	
+	//set click listener for the new game buttone
+	document.getElementsByClassName("btn")[0].addEventListener("click", function(){
+		clearAll();
+		fill_all();
+	})
 }
 
 function set_block(){
@@ -200,6 +201,11 @@ function setGroup(id){
 }
 
 function clearAll(){
+	turns = 0;
+	user_1_Type = -1;
+	for(elem in groups){
+		groups[elem] = 0;
+	}
 	for(let a = 0; a <blocks.length; a++){
 		blocks[a].name.classList.remove("square");
 		blocks[a].name.innerHTML = ""
@@ -207,6 +213,12 @@ function clearAll(){
 	}
 }
 function fill_all(){
+	document.getElementById("status").innerHTML = "	Move your mouse over a square and click to play an X or an O."
+	document.getElementById("status").classList.remove("you-won");
+	if(user_1_Type === -1){
+		user_1_Type  = Math.floor(Math.random() * (10 - 1) ) + 1;
+		if(user_1_Type <= 5){ user_1_Type = "X"}
+	}
 	for(let a = 0; a <blocks.length; a++){
 		blocks[a].name.classList.add("square");
 	}
